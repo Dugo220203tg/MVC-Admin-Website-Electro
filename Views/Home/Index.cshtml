@@ -1,0 +1,188 @@
+﻿@model IEnumerable<TrangQuanLy.Models.HoaDonViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Footer-Header";
+
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Today Sale</p>
+                    <h6 class="mb-0">$1234</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Sale</p>
+                    <h6 class="mb-0">$1234</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-area fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Today Revenue</p>
+                    <h6 class="mb-0">$1234</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Revenue</p>
+                    <h6 class="mb-0">$1234</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Worldwide Sales</h6>
+                    <a href="">Show All</a>
+                </div>
+                <canvas id="worldwide-sales" style="display: block; box-sizing: border-box; height: 360px; width: 721px;" width="721" height="360"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Salse &amp; Revenue</h6>
+                    <a href="">Show All</a>
+                </div>
+                <canvas id="salse-revenue" style="display: block; box-sizing: border-box; height: 360px; width: 721px;" width="721" height="360"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Recent Salse</h6>
+            <a href="">Show All</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-white">
+                        <th scope="col">Mã hóa đơn</th>
+                        <th scope="col">Mã Khách Hàng</th>
+                        <th scope="col">Họ Tên</th>
+                        <th scope="col">Ngày đặt hàng</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Mã trạng thái</th>
+                        <th scope="col">Ghi chú</th>
+                        <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @await Html.PartialAsync("HoaDon", Model)
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-left: 900px">
+            <ul id="pagination" class="div" role="group" aria-label="Third group" style="display:flex; justify-content:left">
+                <li id="prev" class="Back btn btn-info rounded-pill m-2">
+                    <
+                </li>
+                @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 0)
+                {
+                    int startPage = 1;
+                    int endPage = Math.Min(5, ViewBag.TotalPages);
+
+                    if (ViewBag.Page > 3)
+                    {
+                        startPage = ViewBag.Page;
+                        endPage = Math.Min(ViewBag.Page + 5, ViewBag.TotalPages);
+                    }
+
+                    for (int i = startPage; i <= endPage; i++)
+                    {
+                        <li class="page btn btn-info rounded-pill m-2 @(i == ViewBag.Page ? "active" : "")">
+                            <a href="@Url.Action("Index", "Home", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
+                        </li>
+                    }
+                }
+                <li id="next" class="Next btn btn-info rounded-pill m-2">
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var currentPage = @(ViewBag.Page);
+        var totalPages = @(ViewBag.TotalPages);
+        var visiblePages = 5;
+
+        function showPages(start, end) {
+            var pages = document.getElementsByClassName("page");
+            for (var i = 0; i < pages.length; i++) {
+                if (i >= start && i < end) {
+                    pages[i].classList.remove("hidden");
+                } else {
+                    pages[i].classList.add("hidden");
+                }
+            }
+        }
+
+        function updatePagination() {
+            var start = (currentPage - 1) * visiblePages;
+            var end = Math.min(currentPage * visiblePages, totalPages);
+            showPages(start, end);
+        }
+
+        function goToNextPage() {
+            if (currentPage < totalPages) {
+                currentPage += 1;
+                updatePagination();
+                console.log("Next button clicked. Current page: " + currentPage);
+            }
+        }
+
+        function goToPrevPage() {
+            if (currentPage > 1) {
+                currentPage -= 1;
+                updatePagination();
+                console.log("Previous button clicked. Current page: " + currentPage);
+            }
+        }
+
+        document.getElementById("prev").addEventListener("click", function () {
+            goToPrevPage();
+        });
+
+        document.getElementById("next").addEventListener("click", function () {
+            goToNextPage();
+        });
+
+        var pageLinks = document.querySelectorAll(".page a");
+        pageLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                var page = parseInt(this.innerText);
+                currentPage = page;
+                updatePagination();
+                console.log("Page link clicked. Current page: " + currentPage);
+            });
+        });
+
+        updatePagination(); // Call this initially to show the correct page range
+    </script>
+}

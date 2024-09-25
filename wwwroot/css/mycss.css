@@ -1,0 +1,278 @@
+/* Add these styles to your mycss.css file */
+
+.image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.image-preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(33.333% - 10px); /* 3 images per row, with gap */
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.image-name {
+    margin: 5px 0;
+    font-size: 0.8em;
+    text-align: center;
+    word-break: break-all;
+}
+
+.remove-image {
+    margin-top: 5px;
+}
+.container-fluid {
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #2c3034; /* Assuming .bg-secondary is this color */
+    border-radius: 0.25rem;
+    padding: 20px;
+}
+
+.form-content {
+    display: flex;
+    gap: 20px;
+}
+
+.form-fields {
+    flex: 1;
+}
+
+.image-content {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.close-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+#imagePreview {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+}
+.order-details {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+}
+
+    .section-title .title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-transform: uppercase;
+    }
+
+.order-summary {
+    margin-top: 20px;
+}
+
+.order-col {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+    .order-col:last-child {
+        border-bottom: none;
+    }
+
+    .order-col strong {
+        font-weight: bold;
+    }
+
+.order-products .order-col {
+    padding: 5px 0;
+    font-size: 16px;
+}
+
+.order-total {
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.order-summary .order-col:first-child strong {
+    font-size: 18px;
+    color: #333;
+}
+
+.order-summary .order-col:nth-last-child(2) {
+    font-size: 18px;
+}
+
+.order-summary .order-col:nth-last-child(1) strong {
+    font-size: 24px;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+.order-summary .order-col div {
+    font-size: 16px;
+}
+
+.order-summary .order-col:nth-last-child(1) .order-total {
+    font-size: 32px;
+}
+
+.order-summary .order-total {
+    color: red;
+    text-align: right;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #e51d3a;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+    button:hover {
+        background-color: #c01730;
+    }
+
+.order-details {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+}
+
+    .section-title .title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-transform: uppercase;
+    }
+
+.order-summary {
+    margin-top: 20px;
+}
+
+.order-col {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+    .order-col:last-child {
+        border-bottom: none;
+    }
+
+    .order-col strong {
+        font-weight: bold;
+    }
+
+.order-products .order-col {
+    padding: 5px 0;
+    font-size: 16px;
+}
+
+.order-total {
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.order-summary .order-col:first-child strong {
+    font-size: 18px;
+    color: #333;
+}
+
+.order-summary .order-col:nth-last-child(2) {
+    font-size: 18px;
+}
+
+.order-summary .order-col:nth-last-child(1) strong {
+    font-size: 24px;
+}
+
+.order-summary .order-col div {
+    font-size: 16px;
+}
+
+.order-summary .order-col:nth-last-child(1) .order-total {
+    font-size: 32px;
+}
+
+.order-summary .order-total {
+    color: red;
+    text-align: right;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #e51d3a;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+    button:hover {
+        background-color: #c01730;
+    }

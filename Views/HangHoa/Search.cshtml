@@ -1,0 +1,112 @@
+﻿@model IEnumerable<TrangQuanLy.Models.HangHoaVM>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "_Footer-Header";
+
+}
+<body>
+    <!-- Table Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <div class="navbar ">
+                        <h6 class="mb-4" style="margin-bottom:0px;">Sản Phẩm</h6>
+                        <div class="nav-item dropdown" style="display: inline-flex; justify-content:center; align-items:center; margin-left: 800px">
+                            <form class="d-none d-md-flex ms-4" asp-action="Search" asp-controller="HangHoa" method="get">
+                                <input class="form-control bg-dark border-0" type="search" placeholder="Search" name="query">
+                                <button type="submit" class="btn btn-square btn-outline-info m-2"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                        <div style="margin-right:9px">
+                            <a asp-action="Create" type="button" class="btn btn-outline-info m-2">Thêm sản phẩm</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Mã sản phẩm
+                                    </th>
+                                    <th style="width:220px; word-wrap: break-word;">
+                                        Tên
+                                    </th>
+                                    <th>
+                                        Hình ảnh
+                                    </th>
+                                    <th>
+                                        Mô tả ngắn
+                                    </th>
+                                    <th>
+                                        Mã sản phẩm
+                                    </th>
+                                    <th>
+                                        Ngày sản xuất
+                                    </th>
+                                    <th>
+                                        Giảm Giá
+                                    </th>
+                                    <th>
+                                        Nhà cung cấp
+                                    </th>
+                                    <th>
+                                        Đơn giá
+                                    </th>
+                                    <th>
+                                        Lượt xem
+                                    </th>
+                                    <th>
+                                        Chức năng
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @await Html.PartialAsync("SanPham", Model)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-left: 900px">
+                        <ul class="div" role="group" aria-label="Third group" style="display:flex; justify-content:left">
+                            @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 0)
+                            {
+                                for (int i = 1; i <= ViewBag.TotalPages; i++)
+                                {
+                                    <li class="@(ViewBag.Page == i ? "active" : "") btn btn-square btn-outline-info m-2">
+                                        <a href="@Url.Action("Index", "HangHoa", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Table End -->
+    @section scripts {
+        <script>
+            document.getElementById('delete-form').addEventListener('submit', function (event) {
+                var confirmation = confirm('Bạn có chắc muốn xóa?');
+                if (!confirmation) {
+                    event.preventDefault(); // Ngăn chặn gửi yêu cầu POST nếu người dùng không đồng ý
+                }
+            });
+            $(document).ready(function () {
+                $(".page-link").click(function (e) {
+                    e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+                    var page = $(this).text(); // Lấy số trang từ nội dung của thẻ <a>
+                    // Thực hiện các thao tác cần thiết để chuyển sang trang mới, ví dụ:
+                    // window.location.href = "/products?page=" + page;
+                    // Với "/products?page=" là đường dẫn của trang trên server và page là số trang cần chuyển đến
+                    console.log("Chuyển đến trang: " + page);
+                });
+            });
+        </script>
+    }
+</body>

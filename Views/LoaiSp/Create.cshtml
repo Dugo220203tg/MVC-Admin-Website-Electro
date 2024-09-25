@@ -1,0 +1,42 @@
+﻿@model TrangQuanLy.Models.LoaiSpViewMD
+<body style="height:max-content">
+    <div class="" style="display:flex; align-items:center; justify-content:center">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h5 class="mb-4">Thêm sản phẩm</h5>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="TenLoai" class="control-label"></label>
+                    <input asp-for="TenLoai" class="form-control" />
+                    <span asp-validation-for="TenLoai" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Mota" class="control-label"></label>
+                    <input asp-for="Mota" class="form-control" />
+                    <span asp-validation-for="Mota" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Hinh" for="formFile" class="form-label">Chọn hình ảnh sản phẩm</label>
+                    <input asp-for="Hinh" class="form-control bg-dark" type="file" id="formFile" onchange="previewImage(this)">
+                    <span asp-validation-for="Hinh" class="text-danger"></span>
+                </div>
+                <img id="imagePreview" src="#" alt="Hình ảnh sản phẩm" style="display: none; max-width: 100%; max-height: 200px;">
+                <div class="mb-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index" style="position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 9999;">X</a>
+    </div>
+</body>
