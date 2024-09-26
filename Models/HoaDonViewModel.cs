@@ -66,9 +66,14 @@ namespace TrangQuanLy.Models
 
         [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
         public string DienThoai { get; set; }
-        public string? TrangthaiHd { get; set; }
+        public string? TenTrangThai { get; set; }
 
         // Chi tiết hóa đơn
         public List<ChiTietHoaDonMD> ChiTietHds { get; set; } = new List<ChiTietHoaDonMD>();
+    }
+    public class TrangThaiHd
+    {
+        public int MaTrangThai { get; set; }
+        public string TenTrangThai { get; set; }
     }
 }

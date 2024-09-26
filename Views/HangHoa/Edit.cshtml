@@ -1,225 +1,80 @@
-﻿@model TrangQuanLy.Models.AllHangHoaVM
-<div class="container-fluid pt-4 px-4" style="display:grid;place-items:center;">
+﻿@model TrangQuanLy.Models.HangHoaVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Footer-Header";
+}
+<div class="container-fluid pt-4 px-4">
     <div class="bg-secondary rounded h-100 p-4">
         <h5 class="mb-4">Thêm sản phẩm</h5>
         <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MaHH" />
-            <div class="form-group">
-                <label asp-for="TenHH" class="control-label">Tên sản phẩm </label>
-                <input asp-for="TenHH" class="form-control" />
-                <span asp-validation-for="TenHH" class="text-danger"></span>
-            </div>
-            <div class="form-group" style="max-height: 150px; overflow: auto;">
-                <label asp-for="MoTa" class="control-label">Mô tả</label>
-                <input asp-for="MoTa" class="form-control" style="resize: vertical;" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTaDonVi" class="control-label">Mô tả ngắn</label>
-                <input asp-for="MoTaDonVi" class="form-control" />
-                <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
-            </div>
-            <label asp-for="DonGia" class="control-label">Đơn giá</label>
-            <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
-                <input asp-for="DonGia" class="form-control" />
-                <span asp-validation-for="DonGia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GiamGia" class="control-label"></label>
-                <input asp-for="GiamGia" class="form-control" />
-                <span asp-validation-for="GiamGia" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="NgaySX" class="control-label">Ngày sản xuất</label>
-                <input asp-for="NgaySX" class="form-control" />
-                <span asp-validation-for="NgaySX" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="MaLoai" class="control-label">Loại sản phẩm</label>
-                <select id="selectLoaiSp" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
-                    <option selected="">Chọn nhà cung cấp</option>
-                    @await Component.InvokeAsync("LoaiSp")
-                </select>
-                <input id="inputValueLoaiSp" style="display:none;" type="text" class="form-control" name="MaLoai" readonly asp-for="MaLoai">
-            </div>
-            <input asp-for="MaLoai" class="form-control" style="display:none"/>
+            <div class="form-grid">
+                <!-- Cột trái: Các thông tin sản phẩm -->
+                <div class="form-left">
+                    <input type="hidden" asp-for="MaHH" />
+                    <div class="form-group">
+                        <label asp-for="TenHH" class="control-label">Tên sản phẩm</label>
+                        <input asp-for="TenHH" class="form-control" />
+                        <span asp-validation-for="TenHH" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MoTa" class="control-label">Mô tả</label>
+                        <input asp-for="MoTa" class="form-control" style="resize: vertical;" />
+                        <span asp-validation-for="MoTa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MoTaDonVi" class="control-label">Mô tả ngắn</label>
+                        <input asp-for="MoTaDonVi" class="form-control" />
+                        <span asp-validation-for="MoTaDonVi" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DonGia" class="control-label">Đơn giá</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input asp-for="DonGia" class="form-control" />
+                            <span asp-validation-for="DonGia" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GiamGia" class="control-label">Giảm giá</label>
+                        <input asp-for="GiamGia" class="form-control" />
+                        <span asp-validation-for="GiamGia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NgaySX" class="control-label">Ngày sản xuất</label>
+                        <input asp-for="NgaySX" class="form-control" />
+                        <span asp-validation-for="NgaySX" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaLoai" class="control-label">Loại sản phẩm</label>
+                        <select id="selectLoaiSp" class="form-select form-select-sm mb-3">
+                            <option selected="">Chọn loại sản phẩm</option>
+                            @await Component.InvokeAsync("LoaiSp")
+                        </select>
+                        <input id="inputValueLoaiSp" type="text" class="form-control" style="display:none;" name="MaLoai" readonly asp-for="MaLoai">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaNCC" class="control-label">Nhà cung cấp</label>
+                        <select id="selectNCC" class="form-select form-select-sm mb-3">
+                            <option selected="">Chọn nhà cung cấp</option>
+                            @await Component.InvokeAsync("HangSp")
+                        </select>
+                        <input id="inputValueNCC" type="text" class="form-control" style="display:none;" name="MaNCC" readonly asp-for="MaNCC">
+                    </div>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="MaNCC" class="control-label">Nhà cung cấp</label>
-                <select id="selectNCC" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
-                    <option selected="">Chọn nhà cung cấp</option>
-                    @await Component.InvokeAsync("HangSp")
-                </select>
-                <input id="inputValueNCC" style="display:none;" type="text" class="form-control" name="MaNCC" readonly asp-for="MaNCC">
+                <!-- Cột phải: Hình ảnh sản phẩm -->
+                <div class="form-right">
+                    <div class="form-group mb-3-img">
+                        <label asp-for="Hinh" for="formFile" class="form-label">Chọn hình ảnh sản phẩm</label>
+                        <input asp-for="Hinh" class="form-control bg-dark" type="file" id="formFile" onchange="previewImage(this)">
+                        <span asp-validation-for="Hinh" class="text-danger"></span>
+                    </div>
+                    <img id="imagePreview" src="~/Hinh/Hinh/HangHoa/@Model.Hinh" alt="Hình ảnh sản phẩm" class="img-preview">
+                </div>
             </div>
-            <input asp-for="MaNCC" class="form-control" style="display:none" />
-
-            <div class="mb-3">
-                <label asp-for="Hinh" for="formFile" class="form-label">Chọn hình ảnh sản phẩm</label>
-                <input asp-for="Hinh" class="form-control bg-dark" type="file" id="formFile" onchange="previewImage(this)">
-                <span asp-validation-for="Hinh" class="text-danger"></span>
-            </div>
-            <img id="imagePreview" src="~/Hinh/Hinh/HangHoa/@Model.Hinh" alt="Hình ảnh sản phẩm" style="margin-left:70px ;max-width: 100%; max-height: 200px;">
             <div class="form-group">
-                <input type="submit" value="Lưu" class="btn btn-primary" style="margin-left:140px;margin-top: 20px"/>
+                <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
-        <a asp-action="Index" style="position: fixed;
-    top: 10px;
-    right: 10px;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    z-index: 9999;">X</a>
-
     </div>
 </div>
-
-@section Scripts {
-    @{
-        <script>
-            function previewImage(input) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var imgElement = document.getElementById('imagePreview');
-                    imgElement.src = e.target.result;
-                    imgElement.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        </script>
-        <script>
-
-        // --- Truyền giá trị cho select ---
-            document.addEventListener('DOMContentLoaded', function () {
-                var selectElement = document.getElementById('selectNCC');
-                var inputValueElement = document.getElementById('inputValueNCC');
-
-                // Lấy giá trị của thẻ input
-                var maNCCValue = inputValueElement.value;
-
-                // Lặp qua từng option trong select element
-                for (var i = 0; i < selectElement.options.length; i++) {
-                    var option = selectElement.options[i];
-                    // Nếu giá trị của option trùng với giá trị của thẻ input
-                    if (option.value === maNCCValue) {
-                        // Đặt thuộc tính selected cho option
-                        option.selected = true;
-                        // Thoát khỏi vòng lặp sau khi tìm thấy giá trị
-                        break;
-                    }
-                }
-            });
-
-        // --- Truyền giá trị cho select ---
-            document.addEventListener('DOMContentLoaded', function () {
-                var selectElement = document.getElementById('selectLoaiSp');
-                var inputValueElement = document.getElementById('inputValueLoaiSp');
-
-                // Lấy giá trị của thẻ input
-                var maLoaiValue = inputValueElement.value;
-
-                // Lặp qua từng option trong select element
-                for (var i = 0; i < selectElement.options.length; i++) {
-                    var option = selectElement.options[i];
-                    // Nếu giá trị của option trùng với giá trị của thẻ input
-                    if (option.value === maLoaiValue) {
-                        // Đặt thuộc tính selected cho option
-                        option.selected = true;
-                        // Thoát khỏi vòng lặp sau khi tìm thấy giá trị
-                        break;
-                    }
-                }
-            });
-
-            // --- Truyền giá trị từ select vào input
-            document.getElementById('selectLoaiSp').addEventListener('change', function () {
-                var selectedValue = this.value;
-                var inputValue = document.getElementById('inputValueLoaiSp');
-
-                if (selectedValue !== "") {
-                    inputValue.value = selectedValue;
-                } else {
-                    inputValue.value = "";
-                }
-            });
-            document.getElementById('selectNCC').addEventListener('change', function () {
-                var selectedValue = this.value;
-                var inputValue = document.getElementById('inputValueNCC');
-
-                if (selectedValue !== "") {
-                    inputValue.value = selectedValue;
-                } else {
-                    inputValue.value = "";
-                }
-            });
-        </script>
-        <script>
-            function previewImage(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var previewItem = input.closest('.image-input-group').querySelector('.image-preview-item');
-                        var img = previewItem.querySelector('img') || document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'preview-image';
-                        img.alt = 'Preview';
-
-                        var p = previewItem.querySelector('p') || document.createElement('p');
-                        p.className = 'image-name';
-                        p.textContent = input.files[0].name;
-
-                        if (!previewItem.contains(img)) previewItem.appendChild(img);
-                        if (!previewItem.contains(p)) previewItem.appendChild(p);
-
-                        updateExistingImageNames();
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            function addNewImageInput() {
-                var container = document.getElementById('imageInputsContainer');
-                var newIndex = container.children.length;
-
-                var newGroup = document.createElement('div');
-                newGroup.className = 'image-input-group mb-3';
-                newGroup.innerHTML =
-                    <div class="image-preview-item" > </div>
-                        < div class="input-group input-group-img" >
-                            <input type="file" class="form-control bg-dark image-input" name = "ImageFiles" onchange = "previewImage(this)" data - index="${newIndex}" >
-                                <button type="button" class="btn btn-danger remove-image" onclick = "removeImageInput(this)" > Xóa < /button>
-                                    < /div>
-                    ;
-
-                container.appendChild(newGroup);
-            }
-
-            function removeImageInput(button) {
-                var group = button.closest('.image-input-group');
-                group.remove();
-                updateExistingImageNames();
-            }
-
-            function updateExistingImageNames() {
-                var allImageNames = [];
-                var imageNames = document.querySelectorAll('.image-name');
-                imageNames.forEach(function (element) {
-                    allImageNames.push(element.textContent);
-                });
-                document.getElementById('existingImageNames').value = allImageNames.join(',');
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                var container = document.getElementById('imageInputsContainer');
-                if (container.children.length === 0) {
-                    addNewImageInput();
-                }
-                updateExistingImageNames();
-            })</script>
-    }
-}

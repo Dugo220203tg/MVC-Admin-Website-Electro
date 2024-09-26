@@ -27,7 +27,7 @@
         if (page >= 1 && page <= totalPages) {
             currentPage = page;
             updatePagination();
-            console.log(Current page: ${ currentPage });
+            console.log(`Current page: ${currentPage}`); // sử dụng backticks cho template literal
         }
     }
 

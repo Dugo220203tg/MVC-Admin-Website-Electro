@@ -82,24 +82,3 @@
 </div>
 <!-- Table End -->
 <!-- Template Javascript -->
-<script src="~/js/main.js"></script>
-@section scripts {
-    <script>
-        document.getElementById('delete-form').addEventListener('submit', function (event) {
-            var confirmation = confirm('Bạn có chắc muốn xóa?');
-            if (!confirmation) {
-                event.preventDefault(); // Ngăn chặn gửi yêu cầu POST nếu người dùng không đồng ý
-            }
-        });
-        $(document).ready(function () {
-            $(".page-link").click(function (e) {
-                e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-                var page = $(this).text(); // Lấy số trang từ nội dung của thẻ <a>
-                // Thực hiện các thao tác cần thiết để chuyển sang trang mới, ví dụ:
-                // window.location.href = "/products?page=" + page;
-                // Với "/products?page=" là đường dẫn của trang trên server và page là số trang cần chuyển đến
-                console.log("Chuyển đến trang: " + page);
-            });
-        });
-    </script>
-}
