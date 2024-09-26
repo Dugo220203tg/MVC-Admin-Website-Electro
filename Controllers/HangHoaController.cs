@@ -5,6 +5,7 @@ using TrangQuanLy.Models;
 using PagedList;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using TrangQuanLy.Helpers;
 
 namespace TrangQuanLy.Controllers
 {
@@ -19,7 +20,7 @@ namespace TrangQuanLy.Controllers
         }
         //[Authorize]
         [HttpGet]
-        public IActionResult Index(int? page, int? pagesize)
+        public async Task<IActionResult> Index(int? page, int? pagesize)
         {
             if (page == null)
             {
@@ -30,19 +31,25 @@ namespace TrangQuanLy.Controllers
                 pagesize = 9;
             }
             ViewBag.PageSize = pagesize;
+
             List<HangHoaVM> Hanghoa = new List<HangHoaVM>();
-            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/HangHoa/GetAll").Result;
+            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "/HangHoa/GetAll");
 
             if (response.IsSuccessStatusCode)
             {
-                string data = response.Content.ReadAsStringAsync().Result;
+                string data = await response.Content.ReadAsStringAsync();
                 Hanghoa = JsonConvert.DeserializeObject<List<HangHoaVM>>(data);
             }
+
             int totalItems = Hanghoa.Count();
-            decimal totalPages = Math.Ceiling((decimal)((decimal)totalItems / pagesize));
-            ViewBag.TotalPages = totalPages;
+
+            // Creating PaginatedList
+            var paginatedList = PaginatedList<HangHoaVM>.CreateAsync(Hanghoa.AsQueryable(), page ?? 1, pagesize ?? 9);
+
             ViewBag.Page = page;
-            return View(Hanghoa.ToPagedList((int)page, (int)pagesize));
+            ViewBag.TotalPages = paginatedList.TotalPages;
+
+            return View(paginatedList);
         }
         [HttpGet]
         [Authorize]
@@ -122,12 +129,12 @@ namespace TrangQuanLy.Controllers
         {
             try
             {
-                AllHangHoaVM hanghoa = new AllHangHoaVM();
+                HangHoaVM hanghoa = new HangHoaVM();
                 HttpResponseMessage respone = _client.GetAsync(_client.BaseAddress + "/HangHoa/GetById/" + id).Result;
                 if (respone.IsSuccessStatusCode)
                 {
                     string data = respone.Content.ReadAsStringAsync().Result;
-                    hanghoa = JsonConvert.DeserializeObject<AllHangHoaVM>(data);
+                    hanghoa = JsonConvert.DeserializeObject<HangHoaVM>(data);
                 }
                 return View(hanghoa);
 

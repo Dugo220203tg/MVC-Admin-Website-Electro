@@ -16,7 +16,7 @@ namespace TrangQuanLy.ViewComponents
         public IViewComponentResult Invoke()
         {
             List<MiniLoaiSpViewMD> LoaiSP = new List<MiniLoaiSpViewMD>();
-            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/DanhMucSp/GetAll").Result;
+            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/LoaiSp/GetAll").Result;
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;

@@ -1,5 +1,7 @@
-﻿@model IEnumerable<TrangQuanLy.Models.HoaDonViewModel>
+﻿@* @model IEnumerable<TrangQuanLy.Models.HoaDonViewModel> *@
 
+@model PaginatedList<HoaDonViewModel>
+@using TrangQuanLy.Helpers;
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Footer-Header";
@@ -83,8 +85,8 @@
                         <th scope="col">Ngày đặt hàng</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Số điện thoại</th>
-                        <th scope="col">Mã trạng thái</th>
                         <th scope="col">Ghi chú</th>
+                        <th scope="col">Mã trạng thái</th>
                         <th scope="col">Chức năng</th>
                     </tr>
                 </thead>
@@ -96,33 +98,28 @@
                 </tbody>
             </table>
         </div>
-        <div style="margin-left: 900px">
-            <ul id="pagination" class="div" role="group" aria-label="Third group" style="display:flex; justify-content:left">
-                <li id="prev" class="Back btn btn-info rounded-pill m-2">
-                    <
-                </li>
-                @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 0)
+        <div class="paging">
+            <ul id="pagination" role="group" aria-label="Pagination group" style="display: flex; justify-content: center; margin-top:15px;">
+                @if (Model.HasPreviousPage)
                 {
-                    int startPage = 1;
-                    int endPage = Math.Min(5, ViewBag.TotalPages);
-
-                    if (ViewBag.Page > 3)
-                    {
-                        startPage = ViewBag.Page;
-                        endPage = Math.Min(ViewBag.Page + 5, ViewBag.TotalPages);
-                    }
-
-                    for (int i = startPage; i <= endPage; i++)
-                    {
-                        <li class="page btn btn-info rounded-pill m-2 @(i == ViewBag.Page ? "active" : "")">
-                            <a href="@Url.Action("Index", "Home", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
-                        </li>
-                    }
+                    <li><a href="?page=@(Model.PageIndex - 1)&pagesize=@ViewBag.PageSize">Previous</a></li>
                 }
-                <li id="next" class="Next btn btn-info rounded-pill m-2">
-                    >
-                </li>
+
+                @for (var i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li>
+                        <a href="?page=@i&pagesize=@ViewBag.PageSize" class="@(i == Model.PageIndex ? "selected" : "")">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <li><a href="?page=@(Model.PageIndex + 1)&pagesize=@ViewBag.PageSize">Next</a></li>
+                }
             </ul>
         </div>
+
     </div>
 </div>

@@ -38,6 +38,7 @@
 .remove-image {
     margin-top: 5px;
 }
+
 .container-fluid {
     padding: 20px;
 }
@@ -70,10 +71,10 @@
 
 .close-button {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 100px;
+    right: 55px;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #EB1616;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -85,6 +86,7 @@
     max-height: 200px;
     margin-top: 10px;
 }
+
 .order-details {
     background-color: #fff;
     padding: 20px;
@@ -116,7 +118,8 @@
 }
 
     .order-col:last-child {
-        border-bottom: none;
+        margin-top: 5px;
+        border-top: 2px solid #e0e0e0;
     }
 
     .order-col strong {
@@ -153,6 +156,7 @@ input[type="radio"] {
 
 .order-summary .order-col div {
     font-size: 16px;
+    color: black;
 }
 
 .order-summary .order-col:nth-last-child(1) .order-total {
@@ -166,6 +170,11 @@ input[type="radio"] {
 
 input[type="checkbox"] {
     margin-right: 10px;
+}
+
+.button-submit {
+    text-align: center;
+    margin-top: 20px;
 }
 
 button {
@@ -276,3 +285,61 @@ button {
     button:hover {
         background-color: #c01730;
     }
+
+.paging {
+    margin-top: 20px;
+    text-align: center;
+}
+
+    .paging ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: inline-flex;
+        gap: 8px;
+    }
+
+        .paging ul li {
+            display: inline;
+        }
+
+            .paging ul li a {
+                display: block;
+                padding: 10px 15px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                text-decoration: none;
+                color: #333;
+                font-weight: 500;
+                background-color: #f9f9f9;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+                .paging ul li a:hover {
+                    background-color: #007bff;
+                    color: #fff;
+                    border-color: #007bff;
+                }
+
+                .paging ul li a.selected {
+                    background-color: #007bff;
+                    color: white;
+                    border-color: #007bff;
+                    font-weight: bold;
+                }
+
+                    /* Disable clicking on the current page */
+                    .paging ul li a.selected:hover {
+                        cursor: default;
+                        background-color: #007bff;
+                        color: white;
+                    }
+
+                /* Previous/Next button styles */
+                .paging ul li a:disabled,
+                .paging ul li a[aria-disabled="true"] {
+                    pointer-events: none;
+                    background-color: #e9ecef;
+                    color: #6c757d;
+                    border-color: #e9ecef;
+                }

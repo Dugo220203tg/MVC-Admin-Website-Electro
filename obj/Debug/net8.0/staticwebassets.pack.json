@@ -1337,6 +1337,10 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\Anchor.png"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\Asus.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\Asus.jpg"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\Bell.png",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\Bell.png"
     },
@@ -1389,6 +1393,10 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\Heart.png"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\LG.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\LG.jpg"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\Microsoft.png",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\Microsoft.png"
     },
@@ -1401,8 +1409,36 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\agenda_1.jpg"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\aoc.png",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\aoc.png"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\benq.png",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\benq.png"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\dell.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\dell.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\gigabyte.png",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\gigabyte.png"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\logo-viewsonic.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\logo-viewsonic.jpg"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\mayanh.png",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\mayanh.png"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\msi.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\msi.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loai\\sámung.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\Loai\\sámung.jpg"
     },
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\Loaiimages.jpeg",

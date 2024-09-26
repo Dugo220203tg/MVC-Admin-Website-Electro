@@ -1,7 +1,11 @@
 ﻿@model TrangQuanLy.Models.LoaiSpViewMD
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Footer-Header";
+}
 <body style="height:max-content">
     <div class="" style="display:flex; align-items:center; justify-content:center">
-        <div class="bg-secondary rounded h-100 p-4">
+        <div class="bg-secondary rounded h-100 p-4" style="margin-top:70px;">
             <h5 class="mb-4">Thêm sản phẩm</h5>
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -28,15 +32,6 @@
         </div>
     </div>
 
-    <div>
-        <a asp-action="Index" style="position: fixed;
-    top: 10px;
-    right: 10px;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    z-index: 9999;">X</a>
-    </div>
+    <a class="close-button" href="/LoaiSp/Index">X</a>
+
 </body>

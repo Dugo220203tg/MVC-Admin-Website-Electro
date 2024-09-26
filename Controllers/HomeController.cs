@@ -9,6 +9,7 @@ using System.Text;
 using System.Net.Http;
 using Microsoft.AspNetCore.Authorization;
 using PagedList;
+using TrangQuanLy.Helpers;
 
 namespace TrangQuanLy.Controllers
 {
@@ -27,31 +28,31 @@ namespace TrangQuanLy.Controllers
         }
         [Authorize]
         [HttpGet]
-        public IActionResult Index(int? page, int? pagesize)
+        public IActionResult Index(int? page, int? pageSize)
         {
-            if (page == null)
-            {
-                page = 1;
-            }
-            if (pagesize == null)
-            {
-                pagesize = 5;
-            }
-            ViewBag.PageSize = pagesize;
-            List<HoaDonViewModel> HoaDon = new List<HoaDonViewModel>();
+            int pageIndex = page ?? 1;
+            int pageSizeValue = pageSize ?? 5;
+            ViewBag.PageSize = pageSizeValue;
+
+            List<HoaDonViewModel> hoaDonList = new List<HoaDonViewModel>();
             HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/HoaDon/GetAll").Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                HoaDon = JsonConvert.DeserializeObject<List<HoaDonViewModel>>(data);
+                hoaDonList = JsonConvert.DeserializeObject<List<HoaDonViewModel>>(data);
             }
-            int totalItems = HoaDon.Count();
-            int totalPages = (int)Math.Ceiling((decimal)((decimal)totalItems / (decimal)pagesize));
-            ViewBag.TotalPages = totalPages;
-            ViewBag.Page = page;
-            return View(HoaDon.ToPagedList((int)page, (int)pagesize));
+
+            // Create Paginated List
+            PaginatedList<HoaDonViewModel> paginatedList = PaginatedList<HoaDonViewModel>.CreateAsync(
+                hoaDonList, pageIndex, pageSizeValue);
+
+            ViewBag.TotalPages = paginatedList.TotalPages;
+            ViewBag.Page = pageIndex;
+
+            return View(paginatedList);
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -74,13 +75,13 @@ namespace TrangQuanLy.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(HoaDonViewModel model, int MaHd)
+        public async Task<IActionResult> Edit(HoaDonViewModel model, int MaHD)
         {
             try
             {
                 string data = JsonConvert.SerializeObject(model);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _client.PutAsync(_client.BaseAddress + "/HoaDon/Update/" + MaHd, content);
+                HttpResponseMessage response = await _client.PutAsync(_client.BaseAddress + "/HoaDon/Update/" + MaHD, content);
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["successMessage"] = "Hóa đơn đã được cập nhật!";
@@ -94,6 +95,7 @@ namespace TrangQuanLy.Controllers
                 return View(model);
             }
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Search(string? query)

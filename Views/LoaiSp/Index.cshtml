@@ -46,7 +46,7 @@
                     for (int i = 1; i <= ViewBag.TotalPages; i++)
                     {
                         <li class="@(ViewBag.Page == i ? "active" : "") btn btn-info rounded-pill m-2">
-                            <a href="@Url.Action("Index", "HangHoa", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
+                            <a href="@Url.Action("Index", "LoaiSp", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
                         </li>
                     }
                 }
