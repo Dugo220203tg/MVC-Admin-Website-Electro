@@ -5,13 +5,13 @@
 <div class="container-fluid position-relative d-flex p-0">
 
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    @* <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
 
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
 
             <span class="sr-only">Loading...</span>
         </div>
-    </div>
+    </div> *@
     <!-- Spinner End -->
     <!-- Sidebar Start MENU -->
     <div class="sidebar pe-4 pb-3">
@@ -51,7 +51,9 @@
                 <a href="/HangHoa" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Hàng Hóa</a>
                 <a href="/LoaiSp" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Loại sản phẩm</a>
                 <a href="/HangSp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Nhà cung cấp</a>
-                <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                <a href="/DanhMuc" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Danh mục</a>
+                <a href="/DanhGiaSp" class="nav-item nav-link"><i class=""></i>Đánh giá sản phẩm</a>
+
                 <div class="nav-item dropdown">
 
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
@@ -86,7 +88,7 @@
                 <input class="form-control bg-dark border-0" type="search" placeholder="Search">
             </form>
             <div class="navbar-nav align-items-center ms-auto">
-
+                @Html.Partial("_Notification")
                 <div class="nav-item dropdown">
 
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">

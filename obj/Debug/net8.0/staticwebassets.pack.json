@@ -1449,6 +1449,14 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\Acer_logo-300x300.gif"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\Asus.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\Asus.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\LG.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\LG.jpg"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\alienware",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC"
     },
@@ -1457,8 +1465,16 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\amd-logo.jpg"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\aoc.png",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\aoc.png"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\apple.jpg",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\apple.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\benq.png",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\benq.png"
     },
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\dell-logo.jpg",
@@ -1469,16 +1485,36 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\dell-logo2.jpg"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\dell.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\dell.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\gigabyte.png",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\gigabyte.png"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\hp-logo.jpg",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\hp-logo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\images.jfif",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\images.jfif"
     },
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\intel-logo.jpg",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\intel-logo.jpg"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\logo-viewsonic.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\logo-viewsonic.jpg"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\motorola.jpg",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\motorola.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\msi.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\msi.jpg"
     },
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\nokia.jpg",
@@ -1499,6 +1535,10 @@
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\sonny-ericsson.jpg",
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\sonny-ericsson.jpg"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\sámung.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\Hinh\\NhaCC\\sámung.jpg"
     },
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\Hinh\\NhaCC\\tải xuống.jpg",
@@ -2269,10 +2309,6 @@
       "PackagePath": "staticwebassets\\css\\mycss.css"
     },
     {
-      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\css\\myjs.js",
-      "PackagePath": "staticwebassets\\css\\myjs.js"
-    },
-    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -2311,10 +2347,6 @@
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\js\\main.js",
       "PackagePath": "staticwebassets\\js\\main.js"
-    },
-    {
-      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\js\\myjs - Copy.js",
-      "PackagePath": "staticwebassets\\js\\myjs - Copy.js"
     },
     {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\js\\myjs.js",

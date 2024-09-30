@@ -1,0 +1,21 @@
+﻿@model TrangQuanLy.Models.DanhMucViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Footer-Header";
+}
+<body style="height:max-content">
+    <div class="" style="display:flex; align-items:center; justify-content:center">
+        <div class="bg-secondary rounded h-100 p-4" style="margin-top:70px;">
+            <h5 class="mb-4">Thêm danh mục</h5>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="TenDanhMuc" class="control-label"></label>
+                    <input asp-for="TenDanhMuc" class="form-control" />
+                    <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <a class="close-button" href="/DanhMuc/Index">X</a>
+</body>

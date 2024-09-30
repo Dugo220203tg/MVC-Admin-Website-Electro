@@ -3,17 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PagedList;
 using System.Text;
-using TrangQuanLy.Models;
 using TrangQuanLy.Helpers;
+using TrangQuanLy.Models;
 
 namespace TrangQuanLy.Controllers
 {
-
-    public class LoaiSpController : Controller
+    public class DanhGiaSpController : Controller
     {
         private readonly HttpClient _client;
         Uri baseAddress = new Uri("https://localhost:7109/api");
-        public LoaiSpController()
+        public DanhGiaSpController()
         {
             _client = new HttpClient();
             _client.BaseAddress = baseAddress;
@@ -31,34 +30,34 @@ namespace TrangQuanLy.Controllers
                 pagesize = 5;
             }
             ViewBag.PageSize = pagesize;
-            List<LoaiSpViewMD> LoaiSP = new List<LoaiSpViewMD>();
-            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/LoaiSp/GetAll").Result;
+            List<DanhGiaSpMD> DanhGia = new List<DanhGiaSpMD>();
+            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/DanhGiaSp/GetAll").Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                LoaiSP = JsonConvert.DeserializeObject<List<LoaiSpViewMD>>(data);
+                DanhGia = JsonConvert.DeserializeObject<List<DanhGiaSpMD>>(data);
             }
-            int totalItems = LoaiSP.Count();
+            int totalItems = DanhGia.Count();
             decimal totalPages = Math.Ceiling((decimal)((decimal)totalItems / pagesize));
             ViewBag.TotalPages = totalPages;
             ViewBag.Page = page;
-            return View(LoaiSP.ToPagedList((int)page, (int)pagesize));
+            return View("Index", DanhGia.ToPagedList((int)page, (int)pagesize));
         }
         [HttpGet]
         public async Task<IActionResult> Search(string? query)
         {
             // Initialize HangHoaVM list to store search results
-            List<LoaiSpViewMD> searchResult = new List<LoaiSpViewMD>();
+            List<DanhGiaSpMD> searchResult = new List<DanhGiaSpMD>();
 
             // Send a request to the API to get all HangHoa entities
-            List<LoaiSpViewMD> LoaiSp = new List<LoaiSpViewMD>();
-            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/LoaiSp/GetAll").Result;
+            List<DanhGiaSpMD> DanhGiaSp = new List<DanhGiaSpMD>();
+            HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/DanhGiaSp/GetAll").Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                LoaiSp = JsonConvert.DeserializeObject<List<LoaiSpViewMD>>(data);
+                DanhGiaSp = JsonConvert.DeserializeObject<List<DanhGiaSpMD>>(data);
             }
             else
             {
@@ -66,13 +65,13 @@ namespace TrangQuanLy.Controllers
             }
             if (query != null)
             {
-                searchResult = LoaiSp.Where(h => MyUtil.RemoveDiacritics(h.TenLoai)
+                searchResult = DanhGiaSp.Where(h => MyUtil.RemoveDiacritics(h.TenHangHoa)
                     .IndexOf(MyUtil.RemoveDiacritics(query), StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 return View(searchResult);
             }
             if (query == null)
             {
-                return View(LoaiSp);
+                return View(DanhGiaSp);
             }
             return View();
         }
@@ -82,13 +81,13 @@ namespace TrangQuanLy.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(LoaiSpViewMD model)
+        public IActionResult Create(DanhGiaSpMD model)
         {
             try
             {
                 string data = JsonConvert.SerializeObject(model);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = _client.PostAsync(_client.BaseAddress + "/LoaiSp/Post", content).Result;
+                HttpResponseMessage response = _client.PostAsync(_client.BaseAddress + "/DanhGiaSp/Post", content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -109,14 +108,14 @@ namespace TrangQuanLy.Controllers
         {
             try
             {
-                LoaiSpViewMD LoaiSp = new LoaiSpViewMD();
-                HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/LoaiSp/GetById/" + id).Result;
+                DanhGiaSpMD DanhGiaSp = new DanhGiaSpMD();
+                HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/DanhGiaSp/GetById/" + id).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
-                    LoaiSp = JsonConvert.DeserializeObject<LoaiSpViewMD>(data);
+                    DanhGiaSp = JsonConvert.DeserializeObject<DanhGiaSpMD>(data);
                 }
-                return View(LoaiSp);
+                return View(DanhGiaSp);
 
             }
             catch (Exception ex)
@@ -127,13 +126,13 @@ namespace TrangQuanLy.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(LoaiSpViewMD model, int Maloai)
+        public IActionResult Edit(DanhGiaSpMD model, int MaDg)
         {
             try
             {
                 string data = JsonConvert.SerializeObject(model);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = _client.PutAsync(_client.BaseAddress + "/LoaiSp/Update/" + Maloai, content).Result;
+                HttpResponseMessage response = _client.PutAsync(_client.BaseAddress + "/DanhGiaSp/Update/" + MaDg, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["successMessage"] = "Employee Update!";
@@ -152,17 +151,17 @@ namespace TrangQuanLy.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirm(int Maloai)
+        public IActionResult DeleteConfirm(int MaDg)
         {
             try
             {
-                HttpResponseMessage response = _client.DeleteAsync(_client.BaseAddress + "/LoaiSp/Delete/" + Maloai).Result;
+                HttpResponseMessage response = _client.DeleteAsync(_client.BaseAddress + "/DanhGiaSp/Delete/" + MaDg).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["successMessage"] = "Employee Delete!";
                     return RedirectToAction("Index");
                 }
-                return View("Index", "LoaiSp");
+                return View("Index", "DanhGiaSp");
             }
             catch (Exception ex)
             {
@@ -171,5 +170,4 @@ namespace TrangQuanLy.Controllers
             }
         }
     }
-
 }

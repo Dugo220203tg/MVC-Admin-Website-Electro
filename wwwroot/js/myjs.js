@@ -1,228 +1,221 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const paginationContainer = $('#pagination');
-    const totalPages = 10; // Cần đồng bộ với ViewBag.TotalPages từ server
+    // PAGE IN DASHBOARD MOVE
+    let currentPage = 1; // Thay thế bằng giá trị thực tế từ server
+    const totalPages = 10; // Thay thế bằng giá trị thực tế từ server
     const visiblePages = 5;
-    let currentPage = 1;
-
-    if (!paginationContainer) return;
-
-    const prevButton = $('#prev');
-    const nextButton = $('#next');
-    const pageButtons = $$(".page");
 
     function showPages(start, end) {
-        pageButtons.forEach(page => {
-            const pageNum = parseInt(page.getAttribute("data-page"));
-            page.classList.toggle("hidden", pageNum < start || pageNum > end);
-        });
+        const pages = document.getElementsByClassName("page");
+        for (let i = 0; i < pages.length; i++) {
+            if (i >= start && i < end) {
+                pages[i].classList.remove("hidden");
+            } else {
+                pages[i].classList.add("hidden");
+            }
+        }
     }
 
     function updatePagination() {
-        const start = Math.max(1, currentPage - Math.floor(visiblePages / 2));
-        const end = Math.min(start + visiblePages - 1, totalPages);
+        const start = (currentPage - 1) * visiblePages;
+        const end = Math.min(currentPage * visiblePages, totalPages);
         showPages(start, end);
     }
 
-    window.goToPage = function (page) { // Gán hàm cho window
-        if (page >= 1 && page <= totalPages) {
-            currentPage = page;
+    function goToNextPage() {
+        if (currentPage < totalPages) {
+            currentPage += 1;
             updatePagination();
-            console.log(`Current page: ${currentPage}`); // sử dụng backticks cho template literal
+            console.log("Next button clicked. Current page: " + currentPage);
         }
     }
 
-    prevButton?.addEventListener("click", () => {
+    function goToPrevPage() {
         if (currentPage > 1) {
-            goToPage(currentPage - 1);
+            currentPage -= 1;
+            updatePagination();
+            console.log("Previous button clicked. Current page: " + currentPage);
         }
-    });
+    }
 
-    nextButton?.addEventListener("click", () => {
-        if (currentPage < totalPages) {
-            goToPage(currentPage + 1);
-        }
-    });
+    // Xử lý sự kiện cho nút prev và next
+    document.getElementById("prev").addEventListener("click", goToPrevPage);
+    document.getElementById("next").addEventListener("click", goToNextPage);
 
-    // Xử lý sự kiện click cho các trang
-    pageButtons.forEach(page => {
-        page.addEventListener('click', function () {
-            const pageNum = parseInt(this.getAttribute('data-page'));
-            goToPage(pageNum);
+    // Sự kiện cho các liên kết trang
+    const pageLinks = document.querySelectorAll(".page a");
+    pageLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const page = parseInt(this.innerText);
+            currentPage = page;
+            updatePagination();
+            console.log("Page link clicked. Current page: " + currentPage);
         });
     });
 
-    // Khởi tạo phân trang lần đầu
     updatePagination();
-});
 
+    //--- Truyền giá trị cho select (MaNCC và MaLoai) ---
+    function setSelectedValue(selectId, inputId) {
+        const selectElement = document.getElementById(selectId);
+        const inputValueElement = document.getElementById(inputId);
 
-// Utility functions
-function $(selector) {
-    return document.querySelector(selector);
-}
+        const inputValue = inputValueElement ? inputValueElement.value : null;
 
-function $$(selector) {
-    return document.querySelectorAll(selector);
-}
-
-// Active link highlighting
-const currentUrl = window.location.href;
-$$('a[href]').forEach(link => {
-    if (currentUrl.endsWith(link.getAttribute('href'))) {
-        link.classList.add('active');
-    }
-});
-// Date handling functions
-function bindDatePicker() {
-    $(".date").datetimepicker({
-        format: 'YYYY-MM-DD',
-        icons: {
-            time: "fa fa-clock-o",
-            date: "fa fa-calendar",
-            up: "fa fa-arrow-up",
-            down: "fa fa-arrow-down"
-        },
-        showTodayButton: true,
-        useCurrent: false
-    }).on("blur", function () {
-        let date = parseDate(this.value);
-        if (!isValidDate(date)) {
-            date = moment().format('YYYY-MM-DD');
+        if (inputValue) {
+            for (let i = 0; i < selectElement.options.length; i++) {
+                if (selectElement.options[i].value === inputValue) {
+                    selectElement.selectedIndex = i;
+                    break;
+                }
+            }
         }
-        this.value = date;
+    }
+
+    setSelectedValue('selectNCC', 'inputValueNCC');
+    setSelectedValue('selectLoaiSp', 'inputValueLoaiSp');
+
+    // Truyền giá trị từ select vào input
+    document.getElementById('selectLoaiSp').addEventListener('change', function () {
+        const inputValue = document.getElementById('inputValueLoaiSp');
+        inputValue.value = this.value || '';
     });
-}
 
-function isValidDate(value) {
-    return !isNaN(Date.parse(value));
-}
+    document.getElementById('selectNCC').addEventListener('change', function () {
+        const inputValue = document.getElementById('inputValueNCC');
+        inputValue.value = this.value || '';
+    });
 
-function parseDate(value) {
-    const m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
-    return m ? ${ m[5] } -${ ("0" + m[3]).slice(-2) } -${ ("0" + m[1]).slice(-2) } : value;
-}
+    //--- Xử lý hình ảnh trong EDIT HANG HOA ---
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const previewItem = input.closest('.image-input-group').querySelector('.image-preview-item');
+                previewItem.innerHTML = '';
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', function () {
-    // Image handling
-    const imageContainer = $('#imageInputsContainer');
-    if (imageContainer && imageContainer.children.length === 0) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-image';
+                img.alt = 'Preview';
+
+                const p = document.createElement('p');
+                p.className = 'image-name';
+                p.textContent = input.files[0].name;
+
+                previewItem.appendChild(img);
+                previewItem.appendChild(p);
+
+                updateExistingImageNames();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function addNewImageInput() {
+        const container = document.getElementById('imageInputsContainer');
+        const newIndex = container.children.length;
+
+        const newGroup = document.createElement('div');
+        newGroup.className = 'image-input-group mb-3';
+        newGroup.innerHTML = `
+            <div class="image-preview-item"></div>
+            <div class="input-group input-group-img">
+                <input type="file" class="form-control bg-dark image-input" name="ImageFiles" onchange="previewImage(this)" data-index="${newIndex}">
+                <button type="button" class="btn btn-danger remove-image" onclick="removeImageInput(this)">Xóa</button>
+            </div>`;
+
+        container.appendChild(newGroup);
+    }
+
+    function removeImageInput(button) {
+        const group = button.closest('.image-input-group');
+        group.remove();
+        updateExistingImageNames();
+    }
+
+    function updateExistingImageNames() {
+        const imageNames = Array.from(document.querySelectorAll('.image-name')).map(el => el.textContent);
+        document.getElementById('existingImageNames').value = imageNames.join(',');
+    }
+
+    if (document.getElementById('imageInputsContainer').children.length === 0) {
         addNewImageInput();
     }
-    // updateExistingImageNames();
+    updateExistingImageNames();
 
-    // Date picker
-    $('.datepicker')?.datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true,
-        todayHighlight: true
+    //--- Xử lý ngày tháng trong CREATE HANG HOA ---
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $(".date").datetimepicker({
+            format: 'YYYY-MM-DD',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            showTodayButton: true,
+            useCurrent: false
+        }).find('input:first').on("blur", function () {
+            const date = parseDate($(this).val());
+            $(this).val(isValidDate(date) ? date : moment().format('YYYY-MM-DD'));
+        });
+
+        function isValidDate(value) {
+            return !isNaN(Date.parse(value));
+        }
+
+        function parseDate(value) {
+            const m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+            return m ? `${m[5]}-${("00" + m[3]).slice(-2)}-${("00" + m[1]).slice(-2)}` : value;
+        }
     });
 
-    bindDatePicker();
-
-    // Delete confirmation
-    $('#delete-form')?.addEventListener('submit', function (event) {
+    // Confirm delete
+    document.getElementById('delete-form').addEventListener('submit', function (event) {
         if (!confirm('Bạn có chắc muốn xóa?')) {
             event.preventDefault();
         }
     });
 
-
-});
-// Select element handling
-['NCC', 'LoaiSp'].forEach(type => {
-    const select = $(#select${ type });
-    const input = $(#inputValue${ type });
-    if (select && input) {
-        const value = input.value;
-        Array.from(select.options).find(option => option.value === value)?.setAttribute('selected', true);
-        select.addEventListener('change', function () {
-            input.value = this.value || "";
-        });
-    }
-});
-// For HANG_SP image preview
-function previewHangSPImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const imgElement = $('#imagePreview');
-            imgElement.src = e.target.result;
-            imgElement.style.display = 'block';
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-console.log('Script started loading');
-
-// Function to attach event listeners to select elements
-function attachEventListeners() {
-    console.log('Attempting to attach event listeners');
-
-    // Select all dropdowns that start with 'selectTrangThai-'
-    var statusSelects = document.querySelectorAll('select[id^="selectTrangThai-"]');
-    console.log('Found ' + statusSelects.length + ' select elements');
-
-    // Loop through each select element and attach the 'change' event listener
-    statusSelects.forEach(function (select) {
-        console.log('Attaching listener to', select.id);
-
-        select.addEventListener('change', function () {
-            console.log('Change event triggered for', this.id);
-
-            // Extract the order ID (maHD) from the select element's ID
-            var maHD = this.id.split('-')[1];
-            confirmChangeTrangThai(maHD, this);
-        });
+    // Pagination link behavior
+    $(".page-link").click(function (e) {
+        e.preventDefault();
+        const page = $(this).text();
+        console.log("Chuyển đến trang: " + page);
+        // window.location.href = `/products?page=${page}`; // Uncomment for real pagination
     });
-}
 
-// Function to handle the confirmation and AJAX request for changing status
-function confirmChangeTrangThai(maHD, selectElement) {
-    console.log('confirmChangeTrangThai called for order:', maHD);
+    // Active link highlight
+    const currentUrl = window.location.href;
+    document.querySelectorAll('a[href]').forEach(function (link) {
+        if (currentUrl.endsWith(link.getAttribute('href'))) {
+            link.classList.add('active');
+        }
+    });
+    function collectImageNames() {
+        var imageInputs = document.querySelectorAll('.image-input');
+        var imageNames = [];
 
-    // Get the newly selected status value
-    var newMaTrangThai = selectElement.value;
-
-    // Get the original status value (in case we need to revert)
-    var originalValue = selectElement.getAttribute('data-original-value');
-
-    // Confirm with the user before proceeding
-    if (confirm("Bạn có chắc chắn muốn thay đổi trạng thái của đơn hàng này không?")) {
-        console.log('User confirmed status change. Sending AJAX request...');
-
-        // Make the AJAX POST request
-        $.ajax({
-            url: 'https://localhost:7109/api/HoaDon/UpdateTrangThai',  // Correct API endpoint
-            type: 'POST',
-            data: JSON.stringify({
-                maHD: maHD,                // Pass the order ID (maHD)
-                maTrangThai: newMaTrangThai // Pass the new status value (maTrangThai)
-            }),
-            contentType: 'application/json',
-            success: function (response) {
-                console.log('AJAX request successful. Status updated.');
-                alert('Cập nhật trạng thái thành công!');
-
-                // Update the original value to the new value
-                selectElement.setAttribute('data-original-value', newMaTrangThai);
-            },
-            error: function (xhr) {
-                console.error('AJAX request failed:', xhr.statusText);
-
-                // Show error and revert the select element to the original value
-                alert('Cập nhật trạng thái thất bại: ' + xhr.responseText);
-                selectElement.value = originalValue;
+        imageInputs.forEach(function (input) {
+            if (input.files.length > 0) {
+                var fileName = input.files[0].name;
+                imageNames.push(fileName);
             }
         });
-    } else {
-        console.log('User cancelled status change. Reverting select value.');
 
-        // If the user cancels, revert to the original status value
-        selectElement.value = originalValue;
+        // Gộp tên các file hình ảnh thành chuỗi và gán vào hidden input
+        document.getElementById('hinhInput').value = imageNames.join(',');
     }
-}
 
-// Call the function to attach event listeners when the page loads
-document.addEventListener('DOMContentLoaded', attachEventListeners);
+    // Tự động gọi collectImageNames() khi người dùng submit form
+    document.querySelector('form').addEventListener('submit', function (event) {
+        collectImageNames();
+    });
+});

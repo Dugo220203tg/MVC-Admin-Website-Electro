@@ -107,19 +107,19 @@ namespace TrangQuanLy.Controllers
                 // Check if the response is successful
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["successMessage"] = "Thêm sản phẩm mới thành công";
+                    TempData["success"] = "Thêm sản phẩm mới thành công";
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    TempData["errorMessage"] = "Không thể thêm sản phẩm. Vui lòng kiểm tra lại.";
+                    TempData["error"] = "Không thể thêm sản phẩm. Vui lòng kiểm tra lại.";
                     return View(model); // Return the model to retain form data on error
                 }
             }
             catch (Exception ex)
             {
                 // Log the error message and return the model
-                TempData["errorMessage"] = $"Có lỗi xảy ra: {ex.Message}";
+                TempData["error"] = $"Có lỗi xảy ra: {ex.Message}";
                 return View(model); // Return the model to keep form data
             }
         }
@@ -141,7 +141,7 @@ namespace TrangQuanLy.Controllers
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
+                TempData["error"] = ex.Message;
                 return View();
             }
         }
@@ -156,14 +156,14 @@ namespace TrangQuanLy.Controllers
                 HttpResponseMessage response = _client.PutAsync(_client.BaseAddress + "/HangHoa/Update/" + MaHH, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["successMessage"] = "Employee Update!";
+                    TempData["success"] = "Employee Update!";
                     return RedirectToAction("Index");
                 }
                 return View();
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
+                TempData["error"] = ex.Message;
                 return View();
             }
         }
@@ -176,14 +176,14 @@ namespace TrangQuanLy.Controllers
                 HttpResponseMessage response = _client.DeleteAsync(_client.BaseAddress + "/HangHoa/Delete/" + MaHH).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["successMessage"] = "Employee Delete!";
+                    TempData["success"] = "Employee Delete!";
                     return RedirectToAction("Index");
                 }
                 return View("Index","HangHoa");
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
+                TempData["error"] = ex.Message;
                 return View();
             }
         }
