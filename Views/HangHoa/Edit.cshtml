@@ -63,18 +63,38 @@
                 </div>
 
                 <!-- Cột phải: Hình ảnh sản phẩm -->
-                <div class="form-right">
-                    <div class="form-group mb-3-img">
-                        <label asp-for="Hinh" for="formFile" class="form-label">Chọn hình ảnh sản phẩm</label>
-                        <input asp-for="Hinh" class="form-control bg-dark" type="file" id="formFile" onchange="previewImage(this)">
-                        <span asp-validation-for="Hinh" class="text-danger"></span>
+                <div class="image-content">
+                    <div id="imageInputsContainer">
+                        <!-- Hiển thị các ảnh hiện có (nếu có) và trường nhập cho ảnh mới -->
+                        @if (Model != null && !string.IsNullOrEmpty(Model.Hinh))
+                        {
+                            var imageUrls = Model.Hinh.Split(',');
+                            for (int i = 0; i < imageUrls.Length; i++)
+                            {
+                                <div class="image-input-group mb-3">
+                                    <div class="image-preview-item">
+                                        <img src="~/Hinh/Hinh/HangHoa/@Model.MaHH/@imageUrls[i]" alt="@Model.TenHH" class="preview-image">
+                                        <p class="image-name">@imageUrls[i]</p>
+                                    </div>
+                                    <div class="input-group input-group-img">
+                                        <input type="file" class="form-control bg-dark image-input" name="ImageFiles" onchange="previewImage(this)" data-index="@i">
+                                        <button type="button" class="btn btn-danger remove-image" onclick="removeImageInput(this)">Xóa</button>
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
-                    <img id="imagePreview" src="~/Hinh/Hinh/HangHoa/@Model.Hinh" alt="Hình ảnh sản phẩm" class="img-preview">
+                    <button type="button" class="btn btn-primary mt-3" onclick="addNewImageInput()">Thêm hình ảnh</button>
+
+                    <!-- Thêm trường ẩn để chứa danh sách các tên ảnh -->
+                    <input type="hidden" id="hinhInput" name="Hinh" value="@Model?.Hinh">
+
                 </div>
             </div>
             <div class="form-group button-submit">
                 <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
+        <a asp-action="Index" class="close-button">X</a>
     </div>
 </div>

@@ -1,7 +1,7 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     // PAGE IN DASHBOARD MOVE
-    let currentPage = 1; // Thay thế bằng giá trị thực tế từ server
-    const totalPages = 10; // Thay thế bằng giá trị thực tế từ server
+    let currentPage = 1; // Replace with actual value from server
+    const totalPages = 10; // Replace with actual value from server
     const visiblePages = 5;
 
     function showPages(start, end) {
@@ -37,11 +37,13 @@
         }
     }
 
-    // Xử lý sự kiện cho nút prev và next
-    document.getElementById("prev").addEventListener("click", goToPrevPage);
-    document.getElementById("next").addEventListener("click", goToNextPage);
+    // Handle events for prev and next buttons
+    const prevButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+    if (prevButton) prevButton.addEventListener("click", goToPrevPage);
+    if (nextButton) nextButton.addEventListener("click", goToNextPage);
 
-    // Sự kiện cho các liên kết trang
+    // Events for page links
     const pageLinks = document.querySelectorAll(".page a");
     pageLinks.forEach(link => {
         link.addEventListener("click", function (e) {
@@ -55,18 +57,20 @@
 
     updatePagination();
 
-    //--- Truyền giá trị cho select (MaNCC và MaLoai) ---
+    // Set selected value for select (MaNCC and MaLoai)
     function setSelectedValue(selectId, inputId) {
         const selectElement = document.getElementById(selectId);
         const inputValueElement = document.getElementById(inputId);
 
-        const inputValue = inputValueElement ? inputValueElement.value : null;
+        if (selectElement && inputValueElement) {
+            const inputValue = inputValueElement.value;
 
-        if (inputValue) {
-            for (let i = 0; i < selectElement.options.length; i++) {
-                if (selectElement.options[i].value === inputValue) {
-                    selectElement.selectedIndex = i;
-                    break;
+            if (inputValue) {
+                for (let i = 0; i < selectElement.options.length; i++) {
+                    if (selectElement.options[i].value === inputValue) {
+                        selectElement.selectedIndex = i;
+                        break;
+                    }
                 }
             }
         }
@@ -75,19 +79,26 @@
     setSelectedValue('selectNCC', 'inputValueNCC');
     setSelectedValue('selectLoaiSp', 'inputValueLoaiSp');
 
-    // Truyền giá trị từ select vào input
-    document.getElementById('selectLoaiSp').addEventListener('change', function () {
-        const inputValue = document.getElementById('inputValueLoaiSp');
-        inputValue.value = this.value || '';
-    });
+    // Pass value from select to input
+    const selectLoaiSp = document.getElementById('selectLoaiSp');
+    const selectNCC = document.getElementById('selectNCC');
 
-    document.getElementById('selectNCC').addEventListener('change', function () {
-        const inputValue = document.getElementById('inputValueNCC');
-        inputValue.value = this.value || '';
-    });
+    if (selectLoaiSp) {
+        selectLoaiSp.addEventListener('change', function () {
+            const inputValue = document.getElementById('inputValueLoaiSp');
+            if (inputValue) inputValue.value = this.value || '';
+        });
+    }
 
-    //--- Xử lý hình ảnh trong EDIT HANG HOA ---
-    function previewImage(input) {
+    if (selectNCC) {
+        selectNCC.addEventListener('change', function () {
+            const inputValue = document.getElementById('inputValueNCC');
+            if (inputValue) inputValue.value = this.value || '';
+        });
+    }
+
+    // IMAGE HANDLING IN EDIT HANG HOA
+    window.previewImage = function (input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             reader.onload = function (e) {
@@ -112,46 +123,57 @@
         }
     }
 
-    function addNewImageInput() {
+    window.addNewImageInput = function () {
         const container = document.getElementById('imageInputsContainer');
-        const newIndex = container.children.length;
+        if (container) {
+            const newIndex = container.children.length;
 
-        const newGroup = document.createElement('div');
-        newGroup.className = 'image-input-group mb-3';
-        newGroup.innerHTML = `
-            <div class="image-preview-item"></div>
-            <div class="input-group input-group-img">
-                <input type="file" class="form-control bg-dark image-input" name="ImageFiles" onchange="previewImage(this)" data-index="${newIndex}">
-                <button type="button" class="btn btn-danger remove-image" onclick="removeImageInput(this)">Xóa</button>
-            </div>`;
+            const newGroup = document.createElement('div');
+            newGroup.className = 'image-input-group mb-3';
+            newGroup.innerHTML = `
+                <div class="image-preview-item"></div>
+                <div class="input-group input-group-img">
+                    <input type="file" class="form-control bg-dark image-input" name="ImageFiles" onchange="previewImage(this)" data-index="${newIndex}">
+                    <button type="button" class="btn btn-danger remove-image" onclick="removeImageInput(this)">Xóa</button>
+                </div>`;
 
-        container.appendChild(newGroup);
+            container.appendChild(newGroup);
+        }
     }
 
-    function removeImageInput(button) {
+    window.removeImageInput = function (button) {
         const group = button.closest('.image-input-group');
-        group.remove();
-        updateExistingImageNames();
+        if (group) {
+            group.remove();
+            updateExistingImageNames();
+        }
     }
 
     function updateExistingImageNames() {
         const imageNames = Array.from(document.querySelectorAll('.image-name')).map(el => el.textContent);
-        document.getElementById('existingImageNames').value = imageNames.join(',');
+        const hinhInput = document.getElementById('hinhInput');
+        if (hinhInput) {
+            hinhInput.value = imageNames.join(',');
+        }
     }
 
-    if (document.getElementById('imageInputsContainer').children.length === 0) {
+    // Initialize image inputs
+    const imageInputsContainer = document.getElementById('imageInputsContainer');
+    if (imageInputsContainer && imageInputsContainer.children.length === 0) {
         addNewImageInput();
     }
     updateExistingImageNames();
 
-    //--- Xử lý ngày tháng trong CREATE HANG HOA ---
-    $(function () {
+    // DATE HANDLING IN CREATE HANG HOA
+    if (typeof $ !== 'undefined' && $.fn.datepicker) {
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
             todayHighlight: true
         });
+    }
 
+    if (typeof $ !== 'undefined' && $.fn.datetimepicker) {
         $(".date").datetimepicker({
             format: 'YYYY-MM-DD',
             icons: {
@@ -166,31 +188,37 @@
             const date = parseDate($(this).val());
             $(this).val(isValidDate(date) ? date : moment().format('YYYY-MM-DD'));
         });
+    }
 
-        function isValidDate(value) {
-            return !isNaN(Date.parse(value));
-        }
+    function isValidDate(value) {
+        return !isNaN(Date.parse(value));
+    }
 
-        function parseDate(value) {
-            const m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
-            return m ? `${m[5]}-${("00" + m[3]).slice(-2)}-${("00" + m[1]).slice(-2)}` : value;
-        }
-    });
+    function parseDate(value) {
+        const m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+        return m ? `${m[5]}-${("00" + m[3]).slice(-2)}-${("00" + m[1]).slice(-2)}` : value;
+    }
 
     // Confirm delete
-    document.getElementById('delete-form').addEventListener('submit', function (event) {
-        if (!confirm('Bạn có chắc muốn xóa?')) {
-            event.preventDefault();
-        }
-    });
+    const deleteForm = document.getElementById('delete-form');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function (event) {
+            if (!confirm('Bạn có chắc muốn xóa?')) {
+                event.preventDefault();
+            }
+        });
+    }
 
     // Pagination link behavior
-    $(".page-link").click(function (e) {
-        e.preventDefault();
-        const page = $(this).text();
-        console.log("Chuyển đến trang: " + page);
-        // window.location.href = `/products?page=${page}`; // Uncomment for real pagination
-    });
+    if (typeof $ !== 'undefined') {
+        $(".page-link").click(function (e) {
+            e.preventDefault();
+            const page = $(this).text();
+            console.log("Chuyển đến trang: " + page);
+            // Uncomment for real pagination:
+            // window.location.href = `/products?page=${page}`;
+        });
+    }
 
     // Active link highlight
     const currentUrl = window.location.href;
@@ -199,23 +227,12 @@
             link.classList.add('active');
         }
     });
-    function collectImageNames() {
-        var imageInputs = document.querySelectorAll('.image-input');
-        var imageNames = [];
 
-        imageInputs.forEach(function (input) {
-            if (input.files.length > 0) {
-                var fileName = input.files[0].name;
-                imageNames.push(fileName);
-            }
+    // Add event listener to the form for image name collection
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            updateExistingImageNames();
         });
-
-        // Gộp tên các file hình ảnh thành chuỗi và gán vào hidden input
-        document.getElementById('hinhInput').value = imageNames.join(',');
     }
-
-    // Tự động gọi collectImageNames() khi người dùng submit form
-    document.querySelector('form').addEventListener('submit', function (event) {
-        collectImageNames();
-    });
 });
