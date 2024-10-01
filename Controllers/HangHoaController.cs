@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using System.Text;
 using TrangQuanLy.Models;
-using PagedList;
-using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using TrangQuanLy.Helpers;
 
@@ -18,7 +16,7 @@ namespace TrangQuanLy.Controllers
             _client = new HttpClient();
             _client.BaseAddress = baseAddress;
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index(int? page, int? pagesize)
         {

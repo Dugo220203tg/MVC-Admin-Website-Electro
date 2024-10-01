@@ -52,7 +52,7 @@ namespace TrangQuanLy.Controllers
 
             return View(paginatedList);
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -96,7 +96,7 @@ namespace TrangQuanLy.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Search(string? query)
         {

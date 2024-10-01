@@ -39,10 +39,11 @@ namespace TrangQuanLy.Controllers
                 DanhGia = JsonConvert.DeserializeObject<List<DanhGiaSpMD>>(data);
             }
             int totalItems = DanhGia.Count();
-            decimal totalPages = Math.Ceiling((decimal)((decimal)totalItems / pagesize));
-            ViewBag.TotalPages = totalPages;
+            var paginatedList = PaginatedList<DanhGiaSpMD>.CreateAsync(DanhGia.AsQueryable(), page ?? 1, pagesize ?? 5);
             ViewBag.Page = page;
-            return View("Index", DanhGia.ToPagedList((int)page, (int)pagesize));
+            ViewBag.TotalPages = paginatedList.TotalPages;
+
+            return View(paginatedList);
         }
         [HttpGet]
         public async Task<IActionResult> Search(string? query)

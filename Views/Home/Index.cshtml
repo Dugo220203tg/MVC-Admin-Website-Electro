@@ -5,7 +5,6 @@
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Footer-Header";
-
 }
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
@@ -98,28 +97,28 @@
                 </tbody>
             </table>
         </div>
-        <div class="paging">
-            <ul id="pagination" role="group" aria-label="Pagination group" style="display: flex; justify-content: center; margin-top:15px;">
+        <!-- Pagination Controls -->
+        <div style="text-align:center; margin-top:20px;">
+            <ul class="pagination" style="display: inline-flex;">
                 @if (Model.HasPreviousPage)
                 {
-                    <li><a href="?page=@(Model.PageIndex - 1)&pagesize=@ViewBag.PageSize">Previous</a></li>
-                }
-
-                @for (var i = 1; i <= Model.TotalPages; i++)
-                {
-                    <li>
-                        <a href="?page=@i&pagesize=@ViewBag.PageSize" class="@(i == Model.PageIndex ? "selected" : "")">
-                            @i
-                        </a>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.PageIndex - 1, pagesize = ViewBag.PageSize })">Previous</a>
                     </li>
                 }
-
+                @for (var i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
+                    </li>
+                }
                 @if (Model.HasNextPage)
                 {
-                    <li><a href="?page=@(Model.PageIndex + 1)&pagesize=@ViewBag.PageSize">Next</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.PageIndex + 1, pagesize = ViewBag.PageSize })">Next</a>
+                    </li>
                 }
             </ul>
         </div>
-
     </div>
 </div>

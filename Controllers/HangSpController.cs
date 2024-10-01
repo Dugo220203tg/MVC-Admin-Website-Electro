@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PagedList;
 using System.Text;
+using TrangQuanLy.Helpers;
 using TrangQuanLy.Models;
 
 namespace TrangQuanLy.Controllers
@@ -26,22 +27,23 @@ namespace TrangQuanLy.Controllers
             }
             if (pagesize == null)
             {
-                pagesize = 9;
+                pagesize = 5;
             }
             ViewBag.PageSize = pagesize;
-            List<HangSpViewMD> LoaiSP = new List<HangSpViewMD>();
+            List<HangSpViewMD> NhaCC = new List<HangSpViewMD>();
             HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/HangSp/GetAll").Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                LoaiSP = JsonConvert.DeserializeObject<List<HangSpViewMD>>(data);
+                NhaCC = JsonConvert.DeserializeObject<List<HangSpViewMD>>(data);
             }
-            int totalItems = LoaiSP.Count();
-            decimal totalPages = Math.Ceiling((decimal)((decimal)totalItems / pagesize));
-            ViewBag.TotalPages = totalPages;
+            int totalItems = NhaCC.Count();
+            var paginatedList = PaginatedList<HangSpViewMD>.CreateAsync(NhaCC.AsQueryable(), page ?? 1, pagesize ?? 5);
             ViewBag.Page = page;
-            return View(LoaiSP.ToPagedList((int)page, (int)pagesize));
+            ViewBag.TotalPages = paginatedList.TotalPages;
+
+            return View(paginatedList);
         }
         [HttpGet]
         public async Task<IActionResult> Search(string? query)

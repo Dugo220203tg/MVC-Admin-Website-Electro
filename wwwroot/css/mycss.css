@@ -10,32 +10,31 @@ body {
 
 .bg-secondary {
     background-color: #2A2D3E !important;
+    position: relative;
 }
 
-/* Form styles */
+/* Form layout */
 .form-content {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
+    justify-content: space-between;
 }
 
 .form-fields {
     flex: 1 1 60%;
-    min-width: 300px;
 }
 
 .image-content {
     flex: 1 1 35%;
-    min-width: 300px;
 }
 
+/* Form input styles */
 .form-group {
     margin-bottom: 1rem;
 }
 
 .form-label, .control-label {
     color: #fff;
-    margin-bottom: 0.5rem;
 }
 
 .form-control, .form-select {
@@ -45,7 +44,6 @@ body {
 }
 
     .form-control:focus, .form-select:focus {
-        background-color: #191C24;
         border-color: #6C7293;
         box-shadow: 0 0 0 0.2rem rgba(108, 114, 147, 0.25);
         color: #fff;
@@ -54,6 +52,8 @@ body {
 /* Image input styles */
 .image-input-group {
     margin-bottom: 1rem;
+    width:250px;
+    height:250px
 }
 
 .image-preview-item {
@@ -72,23 +72,8 @@ body {
 
 .image-name {
     color: #fff;
-    margin-top: 5px;
-    font-size: 0.9em;
     text-align: center;
 }
-
-.input-group-img {
-    display: flex;
-    gap: 10px;
-}
-
-    .input-group-img .form-control {
-        flex: 1;
-    }
-
-    .input-group-img .btn {
-        flex-shrink: 0;
-    }
 
 /* Button styles */
 .btn-primary {
@@ -98,17 +83,14 @@ body {
 
     .btn-primary:hover {
         background-color: #c01212;
-        border-color: #c01212;
     }
 
 .btn-danger {
     background-color: #dc3545;
-    border-color: #dc3545;
 }
 
     .btn-danger:hover {
         background-color: #bd2130;
-        border-color: #bd2130;
     }
 
 /* Close button */
@@ -118,7 +100,6 @@ body {
     right: 10px;
     background-color: #EB1616;
     color: #fff;
-    border: none;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -126,22 +107,11 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 1.2em;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
 }
 
     .close-button:hover {
         background-color: #c01212;
-        color: #fff;
-        text-decoration: none;
     }
-
-/* Date picker styles */
-.input-group-append .input-group-text {
-    background-color: #2A2D3E;
-    border-color: #6C7293;
-    color: #fff;
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -152,22 +122,4 @@ body {
     .form-fields, .image-content {
         width: 100%;
     }
-}
-
-/* Validation styles */
-.text-danger {
-    color: #dc3545;
-}
-
-/* Select styles */
-.form-select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 16px 12px;
-}
-
-/* Hidden input styles */
-input[style*="display:none"] {
-    display: none !important;
 }

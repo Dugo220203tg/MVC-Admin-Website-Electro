@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using PagedList;
 using System.Text;
 using TrangQuanLy.Models;
 using TrangQuanLy.Helpers;
@@ -40,10 +39,12 @@ namespace TrangQuanLy.Controllers
                 LoaiSP = JsonConvert.DeserializeObject<List<LoaiSpViewMD>>(data);
             }
             int totalItems = LoaiSP.Count();
-            decimal totalPages = Math.Ceiling((decimal)((decimal)totalItems / pagesize));
-            ViewBag.TotalPages = totalPages;
+
+            var paginatedList = PaginatedList<LoaiSpViewMD>.CreateAsync(LoaiSP.AsQueryable(), page ?? 1, pagesize ?? 5);
+            ViewBag.TotalPages = paginatedList.TotalPages;
             ViewBag.Page = page;
-            return View(LoaiSP.ToPagedList((int)page, (int)pagesize));
+
+            return View(paginatedList);
         }
         [HttpGet]
         public async Task<IActionResult> Search(string? query)

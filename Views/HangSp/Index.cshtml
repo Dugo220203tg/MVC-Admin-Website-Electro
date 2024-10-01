@@ -1,5 +1,5 @@
-﻿@model IEnumerable<TrangQuanLy.Models.HangSpViewMD>
-
+﻿@using TrangQuanLy.Helpers;
+@model PaginatedList<TrangQuanLy.Models.HangSpViewMD>
 @{
     ViewData["Title"] = "Index";
     Layout = "_Footer-Header";
@@ -43,16 +43,26 @@
                 </tbody>
             </table>
         </div>
-        <div style="margin-left: 900px">
-            <ul class="div" role="group" aria-label="Third group" style="display:flex; justify-content:left">
-                @if (ViewBag.TotalPages != null && ViewBag.TotalPages > 0)
+        <!-- Pagination Controls -->
+        <div style="text-align:center; margin-top:20px;">
+            <ul class="pagination" style="display: inline-flex;">
+                @if (Model.HasPreviousPage)
                 {
-                    for (int i = 1; i <= ViewBag.TotalPages; i++)
-                    {
-                        <li class="@(ViewBag.Page == i ? "active" : "") btn btn-info rounded-pill m-2">
-                            <a href="@Url.Action("Index", "HangSp", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
-                        </li>
-                    }
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.PageIndex - 1, pagesize = ViewBag.PageSize })">Previous</a>
+                    </li>
+                }
+                @for (var i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i, pagesize = ViewBag.PageSize })">@i</a>
+                    </li>
+                }
+                @if (Model.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.PageIndex + 1, pagesize = ViewBag.PageSize })">Next</a>
+                    </li>
                 }
             </ul>
         </div>

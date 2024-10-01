@@ -39,10 +39,11 @@ namespace TrangQuanLy.Controllers
                 DanhMuc = JsonConvert.DeserializeObject<List<DanhMucViewModel>>(data);
             }
             int totalItems = DanhMuc.Count();
-            decimal totalPages = Math.Ceiling((decimal)((decimal)totalItems / pagesize));
-            ViewBag.TotalPages = totalPages;
+            var paginatedList = PaginatedList<DanhMucViewModel>.CreateAsync(DanhMuc.AsQueryable(), page ?? 1, pagesize ?? 5);
             ViewBag.Page = page;
-            return View(DanhMuc.ToPagedList((int)page, (int)pagesize));
+            ViewBag.TotalPages = paginatedList.TotalPages;
+
+            return View(paginatedList);
         }
         [HttpGet]
         public async Task<IActionResult> Search(string? query)

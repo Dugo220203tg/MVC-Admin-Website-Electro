@@ -4,12 +4,14 @@
     Layout = "_Footer-Header";
 }
 <div class="container-fluid pt-4 px-4">
-    <div class="bg-secondary rounded h-100 p-4">
+    <div class="bg-secondary rounded h-100 p-4 position-relative">
         <h5 class="mb-4">Cập nhật sản phẩm</h5>
+        <!-- Close button in the top right corner -->
+        <a asp-action="Index" class="close-button">X</a>
         <form asp-action="Edit" method="post">
-            <div class="form-grid">
-                <!-- Cột trái: Các thông tin sản phẩm -->
-                <div class="form-left">
+            <div class="form-content d-flex justify-content-between">
+                <!-- Left column: Product information -->
+                <div class="form-fields">
                     <input type="hidden" asp-for="MaHH" />
                     <div class="form-group">
                         <label asp-for="TenHH" class="control-label">Tên sản phẩm</label>
@@ -62,10 +64,10 @@
                     </div>
                 </div>
 
-                <!-- Cột phải: Hình ảnh sản phẩm -->
+                <!-- Right column: Image content -->
                 <div class="image-content">
                     <div id="imageInputsContainer">
-                        <!-- Hiển thị các ảnh hiện có (nếu có) và trường nhập cho ảnh mới -->
+                        <!-- Existing images and inputs for new images -->
                         @if (Model != null && !string.IsNullOrEmpty(Model.Hinh))
                         {
                             var imageUrls = Model.Hinh.Split(',');
@@ -74,8 +76,8 @@
                                 <div class="image-input-group mb-3">
                                     <div class="image-preview-item">
                                         <img src="~/Hinh/Hinh/HangHoa/@Model.MaHH/@imageUrls[i]" alt="@Model.TenHH" class="preview-image">
-                                        <p class="image-name">@imageUrls[i]</p>
-                                    </div>
+@*                                         <p class="image-name">@imageUrls[i]</p>
+ *@                                    </div>
                                     <div class="input-group input-group-img">
                                         <input type="file" class="form-control bg-dark image-input" name="ImageFiles" onchange="previewImage(this)" data-index="@i">
                                         <button type="button" class="btn btn-danger remove-image" onclick="removeImageInput(this)">Xóa</button>
@@ -85,16 +87,15 @@
                         }
                     </div>
                     <button type="button" class="btn btn-primary mt-3" onclick="addNewImageInput()">Thêm hình ảnh</button>
-
-                    <!-- Thêm trường ẩn để chứa danh sách các tên ảnh -->
+                    <!-- Hidden input for image list -->
                     <input type="hidden" id="hinhInput" name="Hinh" value="@Model?.Hinh">
-
                 </div>
             </div>
-            <div class="form-group button-submit">
+
+            <!-- Save button centered at the bottom -->
+            <div class="form-group button-submit text-center mt-4">
                 <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
-        <a asp-action="Index" class="close-button">X</a>
     </div>
 </div>
