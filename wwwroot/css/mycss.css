@@ -21,11 +21,11 @@ body {
 }
 
 .form-fields {
-    flex: 1 1 60%;
+    flex: 1 1 50%;
 }
 
 .image-content {
-    flex: 1 1 35%;
+    flex: 1 1 50%;
 }
 
 /* Form input styles */
@@ -122,4 +122,7 @@ body {
     .form-fields, .image-content {
         width: 100%;
     }
+}
+.cke_notification_warning{
+    display:none;
 }

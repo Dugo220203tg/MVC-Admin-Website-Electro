@@ -2661,6 +2661,14 @@
       "PackagePath": "staticwebassets\\Hinh\\Hinh\\icons\\vit.gif"
     },
     {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\comment.ico",
+      "PackagePath": "staticwebassets\\Hinh\\comment.ico"
+    },
+    {
+      "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\comment.svg",
+      "PackagePath": "staticwebassets\\Hinh\\comment.svg"
+    },
+    {
       "Id": "C:\\Users\\td\\source\\repos\\TDProjectMVC\\TrangQuanLy\\wwwroot\\Hinh\\default.jpg",
       "PackagePath": "staticwebassets\\Hinh\\default.jpg"
     },
